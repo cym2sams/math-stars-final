@@ -5,17 +5,33 @@
     <title>教師後台</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        html, body { height: auto; }
-        body { justify-content: flex-start; align-items: center; flex-direction: column; padding: 2rem 0; }
-        .admin-container { width: 95%; max-width: 800px; margin: 0; }
+        /* 【v-final 修正】 */
+        html, body {
+            height: auto; /* 允許頁面內容決定自身高度 */
+        }
+        body {
+            /* 移除 align-items: center，讓內容可以超過屏幕高度 */
+            justify-content: flex-start; /* 從頂部開始 */
+            align-items: center;
+            flex-direction: column;
+            padding-top: 2rem; /* 增加頂部空間 */
+            padding-bottom: 2rem; /* 增加底部空間 */
+            min-height: 100vh;
+        }
+        .admin-container {
+            margin: 0; /* 移除頂部 margin */
+        }
+        /* ... 其餘所有樣式與上一版完全相同 ... */
+        .game-container { width: 95%; max-width: 800px; background: rgba(255, 255, 255, 0.05); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.2); padding: 20px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); }
+        .title { color: var(--starlight-yellow); font-size: 2.5rem; margin-bottom: 30px; text-shadow: 0 0 10px var(--starlight-yellow); text-align: center; }
         .admin-controls { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid var(--hologram-blue); }
+        #reset-leaderboard-btn { background-color: var(--warning-red); color: var(--control-panel-white); border-radius: 10px; padding: 15px 30px; font-size: 1.2rem; font-weight: bold; cursor: pointer; border: none; }
         .stats-panel { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
         .stat-card { background: rgba(0, 0, 0, 0.2); padding: 15px; border-radius: 8px; text-align: center; }
         .stat-card h3 { font-size: 1rem; color: var(--hologram-blue); margin-bottom: 10px; }
         .stat-card p { font-size: 1.8rem; font-weight: bold; color: var(--starlight-yellow); }
         .filter-container { display: flex; align-items: center; gap: 10px; }
         #class-filter { padding: 8px; border-radius: 5px; border: 1px solid var(--hologram-blue); background: rgba(0, 0, 0, 0.3); color: white; font-size: 1rem; }
-        #reset-leaderboard-btn { background-color: var(--warning-red); color: var(--control-panel-white); border-radius: 10px; padding: 15px 30px; font-size: 1.2rem; font-weight: bold; cursor: pointer; border: none; }
         .leaderboard-table, .class-stats-table { width: 100%; text-align: center; border-collapse: collapse; table-layout: fixed; }
         .leaderboard-table th, .leaderboard-table td, .class-stats-table th, .class-stats-table td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .leaderboard-table thead, .class-stats-table thead { border-bottom: 2px solid rgba(255,255,255,0.3); }
@@ -55,6 +71,7 @@
         <div id="full-leaderboard-container"><p>正在初始化...</p></div>
     </div>
     <script>
+        // --- 離線最終版 JavaScript (與上一版完全相同) ---
         document.addEventListener('DOMContentLoaded', () => {
             'use strict';
             const elements = {
